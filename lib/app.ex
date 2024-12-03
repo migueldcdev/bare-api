@@ -1,18 +1,20 @@
 defmodule App do
-  @moduledoc """
-  Documentation for `App`.
-  """
+  import Plug.Conn
 
-  @doc """
-  Hello world.
+  def init(options) do
+    # initialize options
+    options
+  end
 
-  ## Examples
-
-      iex> App.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def call(conn, _opts) do
+    conn
+    |> put_resp_content_type("text/plain")
+    |> send_resp(200, "Hello world")
   end
 end
+
+# require Logger
+# webserver = {Plug.Cowboy, plug: App, scheme: :http, options: [port: 4000]}
+# {:ok, _} = Supervisor.start_link([webserver], strategy: :one_for_one)
+# Logger.info("Plug now running on localhost:4000")
+# Process.sleep(:infinity)
